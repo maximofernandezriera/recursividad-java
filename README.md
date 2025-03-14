@@ -27,6 +27,23 @@ La aplicación de la recursividad ofrece ciertas ventajas notables. Para algunos
     `}`  
 `}`
 
+            public class Factorial {
+            2	    public static long factorial(int n) {
+            3	        // Caso base: el factorial de 0 o 1 es 1
+            4	        if (n <= 1) {
+            5	            return 1;
+            6	        } else {
+            7	            // Caso recursivo: n! = n * (n-1)!
+            8	            return n * factorial(n - 1);
+            9	        }
+            10	    }
+            11	
+            12	    // Added a main method for testing the factorial function
+            13	    public static void main(String[] args) {
+            14	        System.out.println(factorial(5));  // Output: 120
+            15	    }
+            16	}  // Added this line to close the class
+
 **Explicación Paso a Paso:**
 
 1. El método factorial toma un entero n como entrada.  
