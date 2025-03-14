@@ -1,237 +1,404 @@
-# Recursividad en Java: Ejercicios Resueltos Paso a Paso
+## **Introducción a la Recursividad en Java**
 
-La recursividad es una técnica de programación en la que una función se llama a sí misma para resolver un problema dividiéndolo en subproblemas más pequeños. A continuación se presentan varios ejercicios clásicos de recursividad en Java, ordenados desde un nivel básico hasta un nivel avanzado. Cada ejercicio incluye una introducción del problema, la solución con código Java comentado, una explicación detallada paso a paso del proceso recursivo y ejemplos de ejecución con sus resultados esperados.
+La recursividad es una técnica de programación fundamental en la que una función se llama a sí misma para resolver un problema. Esta estrategia resulta particularmente útil para abordar problemas que pueden descomponerse en subproblemas más pequeños y de naturaleza similar . En esencia, la recursividad permite resolver un problema complejo mediante la solución de instancias más sencillas del mismo problema .  
+Un aspecto central de la recursividad reside en la identificación de sus componentes clave. En primer lugar, se encuentra el **caso base**, que define la condición bajo la cual la recursión debe detenerse. Este caso representa la instancia más simple del problema, cuya solución se conoce directamente y no requiere de más llamadas recursivas . Sin un caso base definido de manera apropiada, una función recursiva podría invocarse a sí misma de forma indefinida, lo que conduciría a un error de desbordamiento de pila . En segundo lugar, se halla el **caso recursivo**, donde la función se llama a sí misma con una entrada modificada, acercándose progresivamente al caso base. La solución para la instancia actual del problema se expresa en términos de la solución obtenida para la instancia más pequeña .  
+La aplicación de la recursividad ofrece ciertas ventajas notables. Para algunos tipos de problemas, especialmente aquellos con estructuras inherentemente recursivas como los árboles, la recursividad puede conducir a soluciones elegantes y concisas, facilitando tanto la comprensión como la implementación del código . De hecho, las soluciones recursivas a menudo sirven como base para algoritmos más avanzados como la programación dinámica y los algoritmos de divide y vencerás . Sin embargo, es importante reconocer que la recursividad también presenta ciertos inconvenientes. En algunos casos, las soluciones recursivas pueden ser menos eficientes que sus contrapartes iterativas debido a la sobrecarga asociada con las llamadas a funciones y al riesgo de errores de desbordamiento de pila si la profundidad de la recursión se vuelve excesiva . Cada llamada recursiva requiere espacio adicional en la memoria de la pila . Por lo tanto, si bien la recursividad puede ofrecer soluciones claras para ciertos problemas, es crucial considerar sus posibles implicaciones en el rendimiento, especialmente en lo que respecta al uso de memoria y la posibilidad de desbordamiento de pila en recursiones profundas..
 
-Ejemplo básico: Factorial de un número
+## **Ejercicios de Recursividad Básicos**
 
-Introducción: El factorial de un número entero positivo n (denotado como n!) se define como el producto de todos los enteros positivos desde 1 hasta n. Por ejemplo, 5! = 5 \times 4 \times 3 \times 2 \times 1 = 120. En recursividad, el factorial tiene una definición natural: el caso base es 0! = 1 y para n > 0, n! = n \times (n-1)!. Usaremos recursividad para calcular el factorial, multiplicando el número por el factorial de su predecesor hasta llegar al caso base.
+### **Factorial**
 
-Código en Java:
+**Introducción:** El factorial de un entero no negativo n, denotado como n\!, se define como el producto de todos los enteros positivos menores o iguales a n. Por convención, el factorial de 0 se define como 1 (0\! \= 1\) . Esta función tiene diversas aplicaciones en matemáticas y ciencias de la computación, como el cálculo de permutaciones .  
+**Código Java:**  
+`public class Factorial {`  
+    `public static long factorial(int n) {`  
+        `// Caso base: el factorial de 0 o 1 es 1`  
+        `if (n <= 1) {`  
+            `return 1;`  
+        `} else {`  
+            `// Caso recursivo: n! = n * (n-1)!`  
+            `return n * factorial(n - 1);`  
+        `}`  
+    `}`
 
-public static int factorial(int n) {
-    // Caso base: el factorial de 0 es 1
-    if (n == 0) {
-        return 1;
-    }
-    // Llamada recursiva: n * factorial de (n-1)
-    return n * factorial(n - 1);
-}
+    `public static void main(String args) {`  
+        `System.out.println("Factorial de 5: " + factorial(5)); // Salida esperada: 120`  
+        `System.out.println("Factorial de 0: " + factorial(0)); // Salida esperada: 1`  
+    `}`  
+`}`
 
-Paso a paso del proceso recursivo:
+**Explicación Paso a Paso:**
 
-Supongamos que llamamos a factorial(5). A continuación se detalla cómo se desarrolla la recursividad:
-	1.	factorial(5) comprueba el caso base. Como 5 no es 0, procede a calcular 5 * factorial(4).
-	2.	Para calcular factorial(4), la función invoca recursivamente factorial(4). Nuevamente 4 no es 0, así que intenta calcular 4 * factorial(3).
-	3.	La función llama a factorial(3). Dado que 3 no es 0, continúa con 3 * factorial(2).
-	4.	La función llama a factorial(2). Como 2 no es 0, sigue con 2 * factorial(1).
-	5.	La función llama a factorial(1). 1 no es 0, así que intenta calcular 1 * factorial(0).
-	6.	La función llama a factorial(0). Aquí se cumple el caso base (n == 0), por lo que la función retorna 1 directamente.
-	7.	Ahora comienza la fase de retorno de la recursión: factorial(1) recibe el resultado de factorial(0) (que es 1) y calcula 1 * 1 = 1.
-	8.	factorial(2) recibe el resultado de factorial(1) (1) y calcula 2 * 1 = 2.
-	9.	factorial(3) recibe el resultado de factorial(2) (2) y calcula 3 * 2 = 6.
-	10.	factorial(4) recibe el resultado de factorial(3) (6) y calcula 4 * 6 = 24.
-	11.	Finalmente, factorial(5) recibe el resultado de factorial(4) (24) y calcula 5 * 24 = 120. Este es el resultado final que devuelve factorial(5).
+1. El método factorial toma un entero n como entrada.  
+2. **Caso Base:** Si n es menor o igual a 1, el método retorna inmediatamente 1\. Esto detiene la recursión para n \= 0 y n \= 1\.  
+3. **Caso Recursivo:** Si n es mayor que 1, el método retorna el producto de n y el resultado de llamar a factorial con n \- 1\.  
+4. Por ejemplo, factorial(5) se ejecutará de la siguiente manera:  
+   * factorial(5) retorna 5 \* factorial(4)  
+   * factorial(4) retorna 4 \* factorial(3)  
+   * factorial(3) retorna 3 \* factorial(2)  
+   * factorial(2) retorna 2 \* factorial(1)  
+   * factorial(1) retorna 1 (caso base)  
+   * Los resultados se multiplican de vuelta: 2 \* 1 \= 2, 3 \* 2 \= 6, 4 \* 6 \= 24, 5 \* 24 \= 120\.
 
-Ejecución con ejemplos y resultado esperado:
+**Ejemplos de Ejecución:**
 
-System.out.println("Factorial de 5 = " + factorial(5));  // Factorial de 5 = 120
-System.out.println("Factorial de 0 = " + factorial(0));  // Factorial de 0 = 1
+* Factorial.factorial(5) producirá la salida: Factorial de 5: 120  
+* Factorial.factorial(0) producirá la salida: Factorial de 0: 1
 
-Ejemplo intermedio: Cálculo del término n-ésimo de la secuencia de Fibonacci
+**Consideraciones:**  
+La definición matemática del factorial, n\! \= n \* (n-1)\!, se traduce directamente a la estructura del código recursivo . Esta correspondencia hace que la implementación recursiva sea una representación natural del concepto. Es fundamental que el caso base (n \<= 1\) detenga la recursión, ya que de lo contrario, la función se llamaría a sí misma con números negativos decrecientes, lo que eventualmente provocaría un error de desbordamiento de pila.
 
-Introducción: La sucesión de Fibonacci es una serie de números donde cada término (a partir del tercero) es la suma de los dos anteriores. La secuencia comienza típicamente con 0 y 1, por lo que queda: 0, 1, 1, 2, 3, 5, 8, 13, … etc. Para calcular recursivamente el término n-ésimo de Fibonacci, definimos los casos base como los términos iniciales: F(0) = 0 y F(1) = 1. Luego, para n \geq 2, F(n) = F(n-1) + F(n-2). Utilizaremos esta definición recursiva en la implementación.
+**Tabla 1: Comparación de Factorial Iterativo vs. Recursivo (para n=3)**
 
-Código en Java:
+| Paso | Factorial Iterativo (n=3) | Factorial Recursivo (n=3) |
+| :---- | :---- | :---- |
+| 1 | resultado \= 1, i \= 1 | factorial(3) llama a 3 \* factorial(2) |
+| 2 | resultado \= 1 \* 1 \= 1, i \= 2 | factorial(2) llama a 2 \* factorial(1) |
+| 3 | resultado \= 1 \* 2 \= 2, i \= 3 | factorial(1) retorna 1 (caso base) |
+| 4 | resultado \= 2 \* 3 \= 6 | factorial(2) retorna 2 \* 1 \= 2 |
+| 5 | Fin del bucle | factorial(3) retorna 3 \* 2 \= 6 |
 
-public static int fibonacci(int n) {
-    // Caso base: Fibonacci de 0 es 0, y de 1 es 1
-    if (n == 0 || n == 1) {
-        return n;
-    }
-    // Llamada recursiva: suma de los dos anteriores
-    return fibonacci(n - 1) + fibonacci(n - 2);
-}
+### **Secuencia de Fibonacci**
 
-Paso a paso del proceso recursivo:
+**Introducción:** La secuencia de Fibonacci es una serie de números que comienza con 0 y 1, donde cada número subsiguiente es la suma de los dos números precedentes. La secuencia comienza típicamente así: 0, 1, 1, 2, 3, 5, 8, 13, 21, etc.. Esta secuencia aparece en diversos fenómenos naturales y tiene aplicaciones en informática.  
+**Código Java:**  
+`public class Fibonacci {`  
+    `public static int fibonacci(int n) {`  
+        `// Casos base: Fibonacci de 0 es 0, y Fibonacci de 1 es 1`  
+        `if (n <= 1) {`  
+            `return n;`  
+        `} else {`  
+            `// Caso recursivo: fib(n) = fib(n-1) + fib(n-2)`  
+            `return fibonacci(n - 1) + fibonacci(n - 2);`  
+        `}`  
+    `}`
 
-Veamos qué ocurre al calcular, por ejemplo, fibonacci(5):
-	1.	fibonacci(5) no es caso base (5 > 1), debe calcular fibonacci(4) + fibonacci(3).
-	2.	Para calcular fibonacci(4), la función llama recursivamente a fibonacci(4):
-	•	fibonacci(4) = fibonacci(3) + fibonacci(2) (ya que 4 > 1).
-	•	Para obtener fibonacci(3): fibonacci(3) = fibonacci(2) + fibonacci(1).
-	•	fibonacci(2) = fibonacci(1) + fibonacci(0); aquí fibonacci(1) devuelve 1 (caso base) y fibonacci(0) devuelve 0 (caso base). Por lo tanto, fibonacci(2) retorna 1 + 0 = 1.
-	•	Ahora, con fibonacci(2) calculado como 1, fibonacci(3) puede retornar fibonacci(2) + fibonacci(1) = 1 + 1 = 2 (recordando que fibonacci(1) es 1).
-	•	Paralelamente, para completar fibonacci(4), necesitamos también fibonacci(2) (además de fibonacci(3) que acabamos de calcular). Ya calculamos fibonacci(2) anteriormente como 1. Entonces fibonacci(4) = fibonacci(3) + fibonacci(2) = 2 + 1 = 3.
-	3.	Ahora volvemos a fibonacci(5). Ya tenemos fibonacci(4) = 3. Necesitamos calcular fibonacci(3) (la segunda parte de la suma original fibonacci(4) + fibonacci(3)):
-	•	Podemos notar que fibonacci(3) fue calculado antes como 2. En una implementación real, esa llamada se realizaría de nuevo a menos que usemos memoización, pero para entender el flujo supondremos ese valor conocido: fibonacci(3) resultará en 2.
-	4.	Finalmente, fibonacci(5) suma los resultados: fibonacci(4) + fibonacci(3) = 3 + 2 = 5. Este es el valor que devuelve fibonacci(5).
+    `public static void main(String args) {`  
+        `System.out.println("Fibonacci de 10: " + fibonacci(10)); // Salida esperada: 55`  
+        `System.out.print("Primeros 10 números de Fibonacci: ");`  
+        `for (int i = 0; i < 10; i++) {`  
+            `System.out.print(fibonacci(i) + " "); // Salida esperada: 0 1 1 2 3 5 8 13 21 34`  
+        `}`  
+        `System.out.println();`  
+    `}`  
+`}`
 
-Ejecución con ejemplos y resultado esperado:
+**Explicación Paso a Paso:**
 
-System.out.println("Fibonacci de 5 = " + fibonacci(5));  // Fibonacci de 5 = 5
-System.out.println("Fibonacci de 6 = " + fibonacci(6));  // Fibonacci de 6 = 8
+1. El método fibonacci toma un entero n como entrada, representando el índice del número de Fibonacci que se va a calcular.  
+2. **Casos Base:** Si n es 0, el método retorna 0\. Si n es 1, el método retorna 1\. Estos son los puntos de inicio de la secuencia.  
+3. **Caso Recursivo:** Si n es mayor que 1, el método retorna la suma del (n-1)-ésimo y el (n-2)-ésimo número de Fibonacci, que se calculan llamando recursivamente a fibonacci con n \- 1 y n \- 2\.  
+4. Por ejemplo, fibonacci(4) se ejecutará como fibonacci(3) \+ fibonacci(2), que se descompone aún más en (fibonacci(2) \+ fibonacci(1)) \+ (fibonacci(1) \+ fibonacci(0)), y así sucesivamente, hasta que se alcancen los casos base.
 
-Ejemplo práctico: Suma de los dígitos de un número
+**Ejemplos de Ejecución:**
 
-Introducción: Este problema consiste en sumar todos los dígitos de un número entero. Por ejemplo, si el número es 1234, la suma de sus dígitos es 1+2+3+4 = 10. Podemos resolverlo recursivamente aprovechando que un número se puede descomponer en su último dígito y el resto del número. La idea es tomar el último dígito (usando la operación módulo 10) y sumarlo a la suma de los dígitos restantes del número (el número dividido entre 10). El proceso continúa hasta llegar a un número de un solo dígito, que es el caso base.
+* Fibonacci.fibonacci(10) producirá la salida: Fibonacci de 10: 55  
+* El bucle en main producirá la salida: Primeros 10 números de Fibonacci: 0 1 1 2 3 5 8 13 21 34
 
-Código en Java:
+**Consideraciones:**  
+La solución recursiva refleja directamente la definición matemática F(n) \= F(n-1) \+ F(n-2) . La naturaleza recursiva inherente de la secuencia de Fibonacci hace que una implementación recursiva sea sencilla. Sin embargo, esta implementación ilustra el concepto de subproblemas superpuestos, ya que los mismos números de Fibonacci se calculan varias veces . Por ejemplo, al calcular fibonacci(4), fibonacci(2) se calcula dos veces. Esto conduce a una ineficiencia para valores más grandes de n, como se menciona en con respecto a la complejidad temporal de O(2^N).
 
-public static int sumaDigitos(int n) {
-    // Caso base: si n es menor de 10, se devuelve n (el número es de una sola cifra)
-    if (n < 10) {
-        return n;
-    }
-    // Llamada recursiva: último dígito (n % 10) + suma de dígitos del resto del número (n / 10)
-    return (n % 10) + sumaDigitos(n / 10);
-}
+**Tabla 2: Traza de Ejecución de Fibonacci Recursivo (para n=4)**  
+`fibonacci(4)`  
+  `fibonacci(3) + fibonacci(2)`  
+    `(fibonacci(2) + fibonacci(1)) + (fibonacci(1) + fibonacci(0))`  
+      `((fibonacci(1) + fibonacci(0)) + 1) + (1 + 0)`  
+        `((1 + 0) + 1) + (1 + 0)`  
+          `(1 + 1) + 1`  
+            `2 + 1`  
+              `3`
 
-Paso a paso del proceso recursivo:
+### **Cuenta Regresiva**
 
-Consideremos el cálculo de sumaDigitos(1234):
-	1.	sumaDigitos(1234) no es caso base (1234 tiene más de un dígito). Se separa el último dígito: 1234 % 10 = 4, y el resto: 1234 / 10 = 123. La función necesita calcular 4 + sumaDigitos(123).
-	2.	sumaDigitos(123) tampoco es caso base (123 tiene varios dígitos). 123 % 10 = 3, resto 123 / 10 = 12. Se plantea calcular 3 + sumaDigitos(12) (este resultado se sumará luego con el 4 que quedó pendiente en el paso anterior).
-	3.	sumaDigitos(12) tampoco es caso base (12 tiene dos dígitos). 12 % 10 = 2, resto 12 / 10 = 1. Calcula 2 + sumaDigitos(1).
-	4.	sumaDigitos(1) sí es caso base (1 es menor que 10). La función retorna 1.
-	5.	Ahora, sumaDigitos(12) recibe el resultado de sumaDigitos(1) (que es 1) y calcula 2 + 1 = 3.
-	6.	sumaDigitos(123) recibe el resultado de sumaDigitos(12) (que es 3) y lo suma con su último dígito (3), obteniendo 6.
-	7.	sumaDigitos(1234) recibe el resultado de sumaDigitos(123) (6) y lo suma con su último dígito (4), obteniendo 10.
-	8.	Finalmente, sumaDigitos(1234) retorna 10, que es la suma de todos sus dígitos.
+**Introducción:** La tarea consiste en implementar una función que imprima una cuenta regresiva desde un entero positivo dado hasta 0\.  
+**Código Java:**  
+`public class Countdown {`  
+    `public static void countDown(int number) {`  
+        `System.out.println(number);`  
+        `// Caso base: detener cuando el número llega a 0`  
+        `if (number > 0) {`  
+            `// Caso recursivo: llamar a countDown con el siguiente número más pequeño`  
+            `countDown(number - 1);`  
+        `}`  
+    `}`
 
-Ejecución con ejemplos y resultado esperado:
+    `public static void main(String args) {`  
+        `System.out.println("Cuenta regresiva desde 3:");`  
+        `countDown(3);`  
+        `// Salida esperada:`  
+        `// 3`  
+        `// 2`  
+        `// 1`  
+        `// 0`  
+    `}`  
+`}`
 
-System.out.println("Suma de dígitos de 1234 = " + sumaDigitos(1234));  // Suma de dígitos de 1234 = 10
-System.out.println("Suma de dígitos de 7 = " + sumaDigitos(7));        // Suma de dígitos de 7 = 7
+**Explicación Paso a Paso:**
 
-Ejemplo avanzado: Inversión de una cadena de texto de forma recursiva
+1. El método countDown toma un entero number como entrada.  
+2. Primero imprime el valor actual de number.  
+3. **Caso Base:** Si number es 0 o menor, la condición if (number \> 0\) se vuelve falsa y la recursión se detiene.  
+4. **Caso Recursivo:** Si number es mayor que 0, el método se llama a sí mismo (countDown) con number \- 1, continuando la cuenta regresiva.  
+5. Por ejemplo, countDown(3) se ejecutará de la siguiente manera:  
+   * Imprime 3, luego llama a countDown(2).  
+   * countDown(2) imprimirá 2, luego llamará a countDown(1).  
+   * countDown(1) imprimirá 1, luego llamará a countDown(0).  
+   * countDown(0) imprimirá 0, y la condición if (0 \> 0\) es falsa, por lo que la recursión se detiene.
 
-Introducción: Invertir una cadena de texto (es decir, obtener la cadena al revés) es un problema clásico. Por ejemplo, la cadena "hola" invertida es "aloh". Usando recursividad, podemos invertir una cadena tomando un carácter de la cadena y resolviendo recursivamente el problema para el resto. El enfoque típico es considerar el primer carácter y colocarlo al final de la cadena invertida del resto de los caracteres. El caso base ocurre cuando la cadena está vacía o tiene un solo carácter, en cuyo caso se retorna tal cual (ya está “invertida”).
+**Ejemplos de Ejecución:**
 
-Código en Java:
+* Countdown.countDown(3) producirá la salida:  
+  `3`  
+  `2`  
+  `1`  
+  `0`
 
-public static String invertirCadena(String str) {
-    // Caso base: cadena vacía o con un solo carácter, se retorna la misma cadena
-    if (str.length() <= 1) {
-        return str;
-    }
-    // Llamada recursiva: invierte la subcadena a partir del segundo carácter y luego añade el primer carácter al final
-    return invertirCadena(str.substring(1)) + str.charAt(0);
-}
+**Consideraciones:**  
+Este ejemplo ilustra una forma simple de recursión donde la función realiza una acción (imprimir) antes de realizar la llamada recursiva. El orden de las operaciones dentro de la función recursiva determina el comportamiento. Aquí, la instrucción de impresión antes de la llamada recursiva da como resultado una secuencia descendente. El caso base (number \<= 0, implícitamente manejado por number \> 0 en la condición if) asegura que la cuenta regresiva finalmente se detenga en 0\.
 
-Paso a paso del proceso recursivo:
+### **Inversión de Cadena**
 
-Supongamos que queremos invertir la cadena "hola" llamando a invertirCadena("hola"):
-	1.	"hola" tiene más de un carácter, por lo que se toma el primer carácter 'h' aparte y se llama recursivamente a invertirCadena("ola"). (Queda pendiente agregar 'h' al final del resultado de esa llamada recursiva).
-	2.	En la llamada invertirCadena("ola"), la cadena "ola" también tiene más de un carácter. Se separa 'o' y se llama a invertirCadena("la"), dejando 'o' pendiente para añadir al final.
-	3.	En la llamada invertirCadena("la"), la cadena "la" tiene más de un carácter. Se separa 'l' y se llama a invertirCadena("a"), dejando 'l' pendiente.
-	4.	En la llamada invertirCadena("a"), la longitud de la cadena es 1 (caso base). La función retorna "a" sin realizar más llamadas recursivas.
-	5.	Comienza la fase de retorno: la llamada invertirCadena("la") recibe la salida de invertirCadena("a") (que es "a") y le agrega el carácter que tenía pendiente ('l') al final, formando "al".
-	6.	Esa salida "al" es devuelta a invertirCadena("ola"), que le agrega su carácter pendiente 'o', formando "alo".
-	7.	Esa salida "alo" es devuelta a invertirCadena("hola"), que le agrega el carácter pendiente 'h', formando "aloh".
-	8.	Finalmente, invertirCadena("hola") retorna "aloh", que es la cadena invertida.
+**Introducción:** El objetivo es escribir una función recursiva que tome una cadena como entrada y devuelva su versión invertida.  
+**Código Java:**  
+`public class StringReversal {`  
+    `public static String reverseString(String str) {`  
+        `// Caso base: una cadena vacía o de un solo carácter es su propia inversa`  
+        `if (str.length() <= 1) {`  
+            `return str;`  
+        `} else {`  
+            `// Caso recursivo: invertir la subcadena excluyendo el primer carácter`  
+            `// y agregar el primer carácter al final`  
+            `return reverseString(str.substring(1)) + str.charAt(0);`  
+        `}`  
+    `}`
 
-Ejecución con ejemplos y resultado esperado:
+    `public static void main(String args) {`  
+        `System.out.println("Inversa de 'hello': " + reverseString("hello")); // Salida esperada: olleh`  
+        `System.out.println("Inversa de 'a': " + reverseString("a"));     // Salida esperada: a`  
+        `System.out.println("Inversa de '': " + reverseString(""));      // Salida esperada:`  
+    `}`  
+`}`
 
-System.out.println(invertirCadena("hola"));       // aloh
-System.out.println(invertirCadena("recursivo"));  // ovisrucer  (cadena invertida)
-System.out.println(invertirCadena(""));           //  (cadena vacía permanece vacía)
+**Explicación Paso a Paso:**
 
-Ejemplo aplicado: Búsqueda binaria recursiva en un array ordenado
+1. El método reverseString toma una cadena str como entrada.  
+2. **Caso Base:** Si la longitud de str es 0 o 1, el método retorna str directamente, ya que una cadena con cero o un carácter es su propia inversa.  
+3. **Caso Recursivo:** Si la longitud de str es mayor que 1, el método hace lo siguiente:  
+   * Toma la subcadena de str comenzando desde el segundo carácter (str.substring(1)).  
+   * Llama recursivamente a reverseString en esta subcadena.  
+   * Luego toma el primer carácter de la cadena original (str.charAt(0)) y lo agrega al final de la subcadena invertida.  
+4. Por ejemplo, reverseString("hello") se ejecutará de la siguiente manera:  
+   * reverseString("hello") retorna reverseString("ello") \+ 'h'  
+   * reverseString("ello") retorna reverseString("llo") \+ 'e'  
+   * reverseString("llo") retorna reverseString("lo") \+ 'l'  
+   * reverseString("lo") retorna reverseString("o") \+ 'l'  
+   * reverseString("o") retorna "o" (caso base)  
+   * Los resultados se concatenan de vuelta: "o" \+ 'l' \= "ol", "ol" \+ 'l' \= "oll", "oll" \+ 'e' \= "olle", "olle" \+ 'h' \= "olleh".
 
-Introducción: La búsqueda binaria es un algoritmo eficiente para encontrar un elemento en un array ordenado. Consiste en comparar el elemento buscado con el elemento central del rango considerado y, en función de esa comparación, descartar la mitad del rango. En la versión recursiva, la función se llamará a sí misma reduciendo el rango de búsqueda a la mitad en cada paso. El caso base ocurre cuando el rango está vacío (no quedan elementos por buscar) o cuando encontramos el elemento. En esta implementación, la función retornará la posición (índice) donde se encuentra el elemento buscado, o -1 si no se encuentra.
+**Ejemplos de Ejecución:**
 
-Código en Java:
+* StringReversal.reverseString("hello") producirá la salida: Inversa de 'hello': olleh  
+* StringReversal.reverseString("a") producirá la salida: Inversa de 'a': a  
+* StringReversal.reverseString("") producirá la salida: Inversa de '':
 
-public static int busquedaBinaria(int[] arr, int objetivo, int inicio, int fin) {
-    // Caso base: rango inválido (el elemento no está en el array)
-    if (inicio > fin) {
-        return -1;
-    }
-    int medio = (inicio + fin) / 2;
-    // Si el elemento central es el objetivo, lo encontramos: retornar índice medio
-    if (arr[medio] == objetivo) {
-        return medio;
-    } 
-    // Si el objetivo es menor que el elemento central, buscar en la mitad izquierda
-    else if (objetivo < arr[medio]) {
-        return busquedaBinaria(arr, objetivo, inicio, medio - 1);
-    } 
-    // Si el objetivo es mayor que el elemento central, buscar en la mitad derecha
-    else {
-        return busquedaBinaria(arr, objetivo, medio + 1, fin);
-    }
-}
+**Consideraciones:**  
+La recursividad permite una forma concisa e intuitiva de invertir una cadena procesándola carácter por carácter . El problema de invertir una cadena se puede descomponer naturalmente en invertir una cadena más pequeña y luego colocar el carácter restante en el extremo correcto. El caso base maneja los escenarios más simples, asegurando que la recursión termine. El paso recursivo reduce el tamaño del problema en un carácter en cada llamada.
 
-(Nota: La primera llamada a esta función típicamente sería busquedaBinaria(miArray, valorBuscado, 0, miArray.length - 1) para iniciar la búsqueda en todo el array.)
+### **Suma de Dígitos**
 
-Paso a paso del proceso recursivo:
+**Introducción:** El problema consiste en calcular la suma de los dígitos individuales de un entero no negativo dado utilizando la recursividad. Por ejemplo, la suma de los dígitos de 123 es 1 \+ 2 \+ 3 \= 6\.  
+**Código Java:**  
+`public class SumOfDigits {`  
+    `public static int sumOfDigits(int n) {`  
+        `// Caso base: si el número es 0, la suma de los dígitos es 0`  
+        `if (n == 0) {`  
+            `return 0;`  
+        `} else {`  
+            `// Caso recursivo: la suma de los dígitos es el último dígito más la suma de los dígitos restantes`  
+            `return (n % 10) + sumOfDigits(n / 10);`  
+        `}`  
+    `}`
 
-Supongamos un array ordenado datos = [1, 3, 5, 7, 9] y queremos buscar el valor 7 llamando a busquedaBinaria(datos, 7, 0, 4):
-	1.	Primera llamada: inicio = 0, fin = 4. Calculamos medio = (0 + 4) / 2 = 2. El elemento central es datos[2] = 5. Como 7 (objetivo) es mayor que 5, descartamos la mitad izquierda (todos los elementos en índices 0,1,2). Ahora nos enfocamos en la mitad derecha del array.
-	2.	Llamada recursiva: ahora inicio = 3, fin = 4. Calculamos medio = (3 + 4) / 2 = 3 (división entera). El elemento central ahora es datos[3] = 7, que coincide con el valor buscado. ¡Encontramos el elemento! La función retornará el índice 3.
-	3.	La llamada original recibe el valor retornado (3) y a su vez lo retorna como resultado final de la búsqueda.
+    `public static void main(String args) {`  
+        `System.out.println("Suma de los dígitos de 123: " + sumOfDigits(123)); // Salida esperada: 6`  
+        `System.out.println("Suma de los dígitos de 9: " + sumOfDigits(9));   // Salida esperada: 9`  
+        `System.out.println("Suma de los dígitos de 0: " + sumOfDigits(0));   // Salida esperada: 0`  
+    `}`  
+`}`
 
-Si en algún punto el subrango se vuelve inválido (por ejemplo, inicio supera a fin sin haber encontrado el elemento), la función retornará -1 indicando que el elemento no está en el array.
+**Explicación Paso a Paso:**
 
-Ejecución con ejemplos y resultado esperado:
+1. El método sumOfDigits toma un entero no negativo n como entrada.  
+2. **Caso Base:** Si n es 0, el método retorna 0, ya que no hay dígitos para sumar.  
+3. **Caso Recursivo:** Si n no es 0, el método calcula el último dígito de n utilizando el operador módulo (n % 10). Luego llama recursivamente a sumOfDigits con los dígitos restantes (n / 10\) y suma el último dígito al resultado de la llamada recursiva.  
+4. Por ejemplo, sumOfDigits(123) se ejecutará de la siguiente manera:  
+   * sumOfDigits(123) retorna (123 % 10\) \+ sumOfDigits(123 / 10\) que es 3 \+ sumOfDigits(12)  
+   * sumOfDigits(12) retorna (12 % 10\) \+ sumOfDigits(12 / 10\) que es 2 \+ sumOfDigits(1)  
+   * sumOfDigits(1) retorna (1 % 10\) \+ sumOfDigits(1 / 10\) que es 1 \+ sumOfDigits(0)  
+   * sumOfDigits(0) retorna 0 (caso base)  
+   * Los resultados se suman de vuelta: 1 \+ 0 \= 1, 2 \+ 1 \= 3, 3 \+ 3 \= 6\.
 
-int[] datos = {1, 3, 5, 7, 9};
-System.out.println(busquedaBinaria(datos, 7, 0, datos.length - 1));  // 3
-System.out.println(busquedaBinaria(datos, 4, 0, datos.length - 1));  // -1 (no encontrado)
+**Ejemplos de Ejecución:**
 
-Ejercicio desafío: Resolver el problema de las Torres de Hanói con explicación
+* SumOfDigits.sumOfDigits(123) producirá la salida: Suma de los dígitos de 123: 6  
+* SumOfDigits.sumOfDigits(9) producirá la salida: Suma de los dígitos de 9: 9  
+* SumOfDigits.sumOfDigits(0) producirá la salida: Suma de los dígitos de 0: 0
 
-Introducción: Las Torres de Hanói es un famoso problema matemático y de recursividad. Se tienen tres postes (torres) y n discos apilados en uno de ellos (torre de origen), ordenados por tamaño de mayor (abajo) a menor (arriba). El objetivo es trasladar toda la pila de n discos desde la torre de origen hasta otra torre de destino, usando la tercera torre como auxiliar, y cumpliendo dos reglas: 1) solo se puede mover un disco a la vez, y 2) nunca se puede colocar un disco más grande sobre otro más pequeño. La solución recursiva aplica el siguiente plan:
-	1.	Mover recursivamente los primeros n-1 discos de la torre origen a la torre auxiliar.
-	2.	Mover el disco n (el más grande) de la torre origen a la torre destino.
-	3.	Mover recursivamente los n-1 discos que estaban en la torre auxiliar a la torre destino.
+**Consideraciones:**  
+La recursividad proporciona una forma clara de procesar los dígitos de un número extrayendo repetidamente el último dígito y procesando la parte restante. El uso de los operadores módulo y división entera conduce naturalmente a una descomposición recursiva del número. El caso base n \== 0 asegura que la recursión se detenga cuando todos los dígitos han sido procesados.
 
-Este algoritmo divide el problema en subproblemas más pequeños (mover pilas más pequeñas de discos) y permite resolverlo en el mínimo número de movimientos necesarios.
+## **Ejercicios de Recursividad Intermedios**
 
-Código en Java:
+### **Búsqueda Binaria**
 
-public static void resolverHanoi(int n, char origen, char auxiliar, char destino) {
-    if (n == 1) {
-        // Caso base: mover un único disco directamente de origen a destino
-        System.out.println("Mover disco 1 de " + origen + " a " + destino);
-    } else {
-        // Mover n-1 discos de origen a auxiliar (usando destino como apoyo)
-        resolverHanoi(n - 1, origen, destino, auxiliar);
-        // Mover el disco n (más grande) de origen a destino
-        System.out.println("Mover disco " + n + " de " + origen + " a " + destino);
-        // Mover los n-1 discos desde auxiliar a destino (usando origen como apoyo)
-        resolverHanoi(n - 1, auxiliar, origen, destino);
-    }
-}
+**Introducción:** La búsqueda binaria es un algoritmo eficiente para encontrar un valor objetivo específico dentro de una matriz ordenada. Funciona dividiendo repetidamente el intervalo de búsqueda por la mitad .  
+**Código Java:**  
+`public class BinarySearchRecursive {`  
+    `public static int binarySearch(int arr, int target, int low, int high) {`  
+        `// Caso base: si el índice bajo excede el índice alto, el objetivo no se encuentra`  
+        `if (low > high) {`  
+            `return -1;`  
+        `}`
 
-Paso a paso del proceso recursivo:
+        `int mid = low + (high - low) / 2; // Calcular el índice medio`
 
-Veamos cómo funciona resolverHanoi(3, 'A', 'B', 'C'), donde queremos mover 3 discos desde la torre A (origen) a la torre C (destino) usando B como auxiliar:
-	1.	Llamada inicial: resolverHanoi(3, A, B, C). Como n > 1, se ejecuta primero resolverHanoi(2, A, C, B) para mover 2 discos de A a B (dejando libre el disco mayor).
-	2.	En resolverHanoi(2, A, C, B): Como n > 1, se ejecuta resolverHanoi(1, A, B, C) para mover 1 disco de A a C (usando B como auxiliar).
-	3.	resolverHanoi(1, A, B, C): Caso base, imprime “Mover disco 1 de A a C”.
-	4.	Regresando a resolverHanoi(2, A, C, B) tras la llamada anterior, ahora imprime “Mover disco 2 de A a B” (mover el disco de tamaño 2 de A a B).
-	5.	Luego llama a resolverHanoi(1, C, A, B) para mover 1 disco de C a B (usando A como auxiliar).
-	6.	resolverHanoi(1, C, A, B): Caso base, imprime “Mover disco 1 de C a B”.
-	7.	Regresamos a resolverHanoi(3, A, B, C) después de haber movido 2 discos de A a B. Ahora imprime “Mover disco 3 de A a C” (mover el disco más grande al destino).
-	8.	Finalmente, llama a resolverHanoi(2, B, A, C) para mover los 2 discos restantes desde B hasta C (usando A como auxiliar).
-	9.	En resolverHanoi(2, B, A, C): llama a resolverHanoi(1, B, C, A) para mover 1 disco de B a A.
-	10.	resolverHanoi(1, B, C, A): Caso base, imprime “Mover disco 1 de B a A”.
-	11.	Regresa a resolverHanoi(2, B, A, C) e imprime “Mover disco 2 de B a C”.
-	12.	Llama a resolverHanoi(1, A, B, C) para mover 1 disco de A a C.
-	13.	resolverHanoi(1, A, B, C): Caso base, imprime “Mover disco 1 de A a C”.
-	14.	Con esto finaliza la secuencia de movimientos. En total se han realizado 7 movimientos, que son los necesarios para trasladar 3 discos de A a C.
+        `// Si el objetivo está en el medio`  
+        `if (arr[mid] == target) {`  
+            `return mid;`  
+        `}`  
+        `// Si el objetivo es menor que el elemento medio, buscar en la mitad izquierda`  
+        `else if (arr[mid] > target) {`  
+            `return binarySearch(arr, target, low, mid - 1);`  
+        `}`  
+        `// Si el objetivo es mayor que el elemento medio, buscar en la mitad derecha`  
+        `else {`  
+            `return binarySearch(arr, target, mid + 1, high);`  
+        `}`  
+    `}`
 
-Ejecución con ejemplo y resultado esperado:
+    `public static void main(String args) {`  
+        `int sortedArray = {2, 5, 7, 8, 11, 12};`  
+        `int target = 7;`  
+        `int index = binarySearch(sortedArray, target, 0, sortedArray.length - 1);`  
+        `if (index != -1) {`  
+            `System.out.println("Objetivo " + target + " encontrado en el índice " + index); // Salida esperada: Objetivo 7 encontrado en el índice 2`  
+        `} else {`  
+            `System.out.println("Objetivo " + target + " no encontrado en la matriz");`  
+        `}`
 
-System.out.println("Movimientos para 3 discos:");
-resolverHanoi(3, 'A', 'B', 'C');  
-// Mover disco 1 de A a C
-// Mover disco 2 de A a B
-// Mover disco 1 de C a B
-// Mover disco 3 de A a C
-// Mover disco 1 de B a A
-// Mover disco 2 de B a C
-// Mover disco 1 de A a C
+        `target = 1;`  
+        `index = binarySearch(sortedArray, target, 0, sortedArray.length - 1);`  
+        `if (index != -1) {`  
+            `System.out.println("Objetivo " + target + " encontrado en el índice " + index);`  
+        `} else {`  
+            `System.out.println("Objetivo " + target + " no encontrado en la matriz"); // Salida esperada: Objetivo 1 no encontrado en la matriz`  
+        `}`  
+    `}`  
+`}`
 
-Nota: Como se observa, para 3 discos se requieren 7 movimientos (2^3 - 1 = 7). En general, para n discos, el número mínimo de movimientos necesarios es 2^n - 1.
+**Explicación Paso a Paso:**
+
+1. El método binarySearch toma una matriz de enteros ordenada arr, el valor target a buscar y los índices low y high del intervalo de búsqueda actual.  
+2. **Caso Base:** Si low se vuelve mayor que high, significa que el intervalo de búsqueda está vacío y el objetivo no está presente en la matriz. El método retorna \-1.  
+3. Calcula el índice mid del intervalo actual.  
+4. Si el elemento en arr\[mid\] es igual al target, el método ha encontrado el objetivo y retorna mid.  
+5. Si el elemento en arr\[mid\] es mayor que el target, significa que el objetivo (si está presente) debe estar en la mitad izquierda del intervalo. El método llama recursivamente a binarySearch con la misma matriz y objetivo, pero con el índice high actualizado a mid \- 1\.  
+6. Si el elemento en arr\[mid\] es menor que el target, significa que el objetivo (si está presente) debe estar en la mitad derecha del intervalo. El método llama recursivamente a binarySearch con la misma matriz y objetivo, pero con el índice low actualizado a mid \+ 1\.
+
+**Ejemplos de Ejecución:** (Como se proporciona en los comentarios del código)
+
+**Consideraciones:**  
+La recursividad implementa de forma elegante la estrategia de divide y vencerás de la búsqueda binaria dividiendo repetidamente el espacio de búsqueda por la mitad. El problema se descompone en buscar en una submatriz más pequeña. Pasar los índices low y high como parámetros es esencial para definir el subproblema actual que se está considerando en las llamadas recursivas.
+
+### **Función de Ackermann**
+
+**Introducción:** La función de Ackermann es un ejemplo clásico de una función recursiva que destaca por no ser una función recursiva primitiva. Crece extremadamente rápido en valor a medida que aumentan sus argumentos . La función se define de la siguiente manera: A(m, n) \=
+
+* n \+ 1, si m \= 0  
+* A(m \- 1, 1), si m \> 0 y n \= 0  
+* A(m \- 1, A(m, n \- 1)), si m \> 0 y n \> 0
+
+**Código Java:**  
+`public class AckermannFunction {`  
+    `public static int ackermann(int m, int n) {`  
+        `if (m == 0) {`  
+            `return n + 1;`  
+        `} else if (m > 0 && n == 0) {`  
+            `return ackermann(m - 1, 1);`  
+        `} else if (m > 0 && n > 0) {`  
+            `return ackermann(m - 1, ackermann(m, n - 1));`  
+        `} else {`  
+            `// Manejar entrada inválida (no debería ocurrir para m y n no negativos)`  
+            `return -1;`  
+        `}`  
+    `}`
+
+    `public static void main(String args) {`  
+        `System.out.println("A(0, 0) = " + ackermann(0, 0)); // Salida esperada: 1`  
+        `System.out.println("A(1, 2) = " + ackermann(1, 2)); // Salida esperada: 4`  
+        `System.out.println("A(2, 1) = " + ackermann(2, 1)); // Salida esperada: 5`  
+        `System.out.println("A(3, 3) = " + ackermann(3, 3)); // Salida esperada: 61 (computacionalmente intensivo)`  
+        `// System.out.println("A(4, 0) = " + ackermann(4, 0)); // Tomará mucho tiempo y podría causar desbordamiento de pila`  
+    `}`  
+`}`
+
+**Explicación Paso a Paso:**
+
+1. El método ackermann toma dos enteros no negativos m y n como entrada.  
+2. Implementa la definición de la función de Ackermann utilizando una serie de instrucciones if-else if para verificar las condiciones de cada caso.  
+3. **Caso Base 1:** Si m es 0, retorna n \+ 1\.  
+4. **Caso Base 2:** Si m es mayor que 0 y n es 0, retorna el resultado de llamar a ackermann con m \- 1 y 1\.  
+5. **Caso Recursivo:** Si m es mayor que 0 y n es mayor que 0, retorna el resultado de llamar a ackermann con m \- 1 y el resultado de otra llamada recursiva ackermann(m, n \- 1). Esta recursión anidada es lo que hace que la función crezca tan rápidamente.
+
+**Ejemplos de Ejecución:** (Como se proporciona en los comentarios del código) Tenga en cuenta que para entradas incluso moderadamente grandes (como A(4, 0)), el cálculo puede llevar mucho tiempo y podría provocar un error de desbordamiento de pila debido a la recursión profunda.  
+**Consideraciones:**  
+La función de Ackermann es un excelente ejemplo de una función que se define fácilmente de forma recursiva pero que crece más rápido que cualquier función recursiva primitiva. La llamada recursiva anidada en el tercer caso conduce a este crecimiento explosivo. Esta función destaca el potencial de las funciones recursivas para tener una complejidad computacional y un uso de pila extremadamente altos, incluso para entradas pequeñas.
+
+### **Ordenamiento de Burbuja (Recursivo)**
+
+**Introducción:** Implemente el algoritmo de ordenamiento de burbuja utilizando la recursividad para ordenar una matriz de enteros en orden ascendente . El ordenamiento de burbuja recorre repetidamente la lista, compara elementos adyacentes y los intercambia si están en el orden incorrecto. El paso a través de la lista se repite hasta que la lista está ordenada.  
+**Código Java:**  
+`public class RecursiveBubbleSort {`  
+    `public static void bubbleSortRecursive(int arr, int n) {`  
+        `// Caso base: si solo hay un elemento, ya está ordenado`  
+        `if (n == 1) {`  
+            `return;`  
+        `}`
+
+        `// Una pasada del ordenamiento de burbuja. Después de esta pasada, el elemento más grande`  
+        `// se mueve (o burbujea) al final.`  
+        `for (int i = 0; i < n - 1; i++) {`  
+            `if (arr[i] > arr[i + 1]) {`  
+                `// intercambiar arr[i] y arr[i+1]`  
+                `int temp = arr[i];`  
+                `arr[i] = arr[i + 1];`  
+                `arr[i + 1] = temp;`  
+            `}`  
+        `}`
+
+        `// El elemento más grande está fijo, recurrir para la matriz restante`  
+        `bubbleSortRecursive(arr, n - 1);`  
+    `}`
+
+    `public static void main(String args) {`  
+        `int arr = {64, 34, 25, 12, 22, 11, 90};`  
+        `bubbleSortRecursive(arr, arr.length);`  
+        `System.out.println("Matriz ordenada:");`  
+        `for (int value : arr) {`  
+            `System.out.print(value + " "); // Salida esperada: 11 12 22 25 34 64 90`  
+        `}`  
+        `System.out.println();`  
+    `}`  
+`}`
+
+**Explicación Paso a Paso:**
+
+1. El método bubbleSortRecursive toma una matriz de enteros arr y el tamaño actual n de la matriz a ordenar como entrada.  
+2. **Caso Base:** Si n es 1, significa que solo hay un elemento, por lo que la matriz ya está ordenada y la recursión se detiene.  
+3. **Paso Recursivo:**  
+   * Realiza una pasada del algoritmo de ordenamiento de burbuja estándar en los primeros n-1 elementos de la matriz. Esta pasada moverá el elemento más grande en esta porción de la matriz a su posición ordenada correcta al final de esta porción.  
+   * Después de esta pasada, el elemento más grande se considera ordenado, por lo que el método se llama recursivamente con la matriz y un tamaño reducido de n \- 1 para ordenar los elementos restantes.
+
+**Ejemplos de Ejecución:** (Como se proporciona en los comentarios del código)  
+**Consideraciones:**  
+Si bien el ordenamiento de burbuja es inherentemente un algoritmo iterativo, se puede implementar de forma recursiva realizando una pasada y luego ordenando recursivamente la parte restante de la matriz. El problema se puede ver como la búsqueda repetida del elemento más grande y su colocación al final. La llamada recursiva reduce el tamaño de la porción no ordenada de la matriz en uno en cada paso.
